@@ -1,13 +1,13 @@
 package com.example.forecaster.model
 
 data class Main(
-    val temp: Double?,
-    val feels_like: Double?,
-    val temp_min: Double?,
-    val temp_max: Double?,
-    val pressure: Double?,
-    val sea_level: Double?,
-    val grnd_level: Double?,
-    val humidity: Int?,
-    val temp_kf: Double?
+    val temp: Double = 0.0,
+    val tempMin: Double = 0.0,
+    val grndLevel: Int = 0,
+    val tempKf: Double = 0.0,
+    val humidity: Int = 0,
+    val pressure: Int = 0,
+    val seaLevel: Int = 0,
+    val feelsLike: Double = 0.0,
+    val tempMax: Double = 0.0
 )

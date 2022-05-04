@@ -1,7 +1,7 @@
 package com.example.forecaster.model
 
 data class Wind(
-    val speed: Double?,
-    val deg: Double?,
-    val gust: Double?
+    val deg: Int = 0,
+    val speed: Double = 0.0,
+    val gust: Double = 0.0
 )
