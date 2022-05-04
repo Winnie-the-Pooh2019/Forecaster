@@ -1,7 +1,10 @@
 package com.example.forecaster
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.forecaster.adapter.WeatherAdapter
 import com.example.forecaster.common.Common
 import com.example.forecaster.model.Wrapper
 import com.example.forecaster.retrofit.RetrofitServices
@@ -19,14 +22,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(findViewById(R.id.toolbar))
+        setTitle(R.string.city)
+        Timber.plant(Timber.DebugTree())
 
-        getForecast()
+        val weatherAdapter = WeatherAdapter()
+        findViewById<RecyclerView>(R.id.recycler_vew).apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = weatherAdapter
+        }
+
+        getForecast(getString(R.string.city), weatherAdapter)
     }
 
-    private fun getForecast() {
-        service.getWeather("Moscow").enqueue(object : Callback<Wrapper> {
+    private fun getForecast(city: String, adapter: WeatherAdapter) {
+        service.getWeather(city).enqueue(object : Callback<Wrapper> {
             override fun onResponse(call: Call<Wrapper>, response: Response<Wrapper>) {
                 try {
                     val data = response.body() as Wrapper
@@ -34,6 +44,8 @@ class MainActivity : AppCompatActivity() {
                     println("Logging list $listWeather")
                     Timber.tag("LOGGING DATA").w(data.toString())
                     println("LOGGING DATA = $data")
+
+                    adapter.submitList(listWeather)
                 } catch (e: IOException) {
                     Timber.e("DATA COLLECTED BUT SMTH GOT WRONG")
                     Timber.e(e)

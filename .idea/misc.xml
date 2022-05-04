@@ -3,18 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/outline_ac_unit_24.xml" value="0.31296296296296294" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
         <entry key="app/src/main/res/layout/recycler_item.xml" value="0.358695652173913" />
+        <entry key="app/src/main/res/layout/recycler_item_cold.xml" value="0.35733695652173914" />
+        <entry key="app/src/main/res/menu/toolbar.xml" value="0.3854166666666667" />
       </map>
     </option>
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android API 32 Platform" project-jdk-type="Android SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
-    <option name="id" value="Android" />
+    <option name="id" value="jpab" />
   </component>
 </project>
