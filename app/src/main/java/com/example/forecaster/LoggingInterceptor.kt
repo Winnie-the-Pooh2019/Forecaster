@@ -13,7 +13,7 @@ class LoggingInterceptor : Interceptor {
             .removeHeader("Authorization")
             .build()
 
-        Timber.e("Sending request ${newRequest.url}")
+        Timber.e("Sending request ${newRequest.url} ${newRequest.headers}")
 
         val response = chain.proceed(newRequest)
 

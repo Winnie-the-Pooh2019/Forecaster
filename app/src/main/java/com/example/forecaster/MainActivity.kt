@@ -12,6 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.io.File
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         setTitle(R.string.city)
         Timber.plant(Timber.DebugTree())
+
+        // todo check this feature via physical phone
+        try {
+            val filename = "logcat_${System.currentTimeMillis()}.txt"
+            val outputFile = File(this.externalCacheDir, filename)
+            Runtime.getRuntime().exec("logcat -f ${outputFile.absolutePath}")
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
 
         val weatherAdapter = WeatherAdapter()
         findViewById<RecyclerView>(R.id.recycler_vew).apply {
