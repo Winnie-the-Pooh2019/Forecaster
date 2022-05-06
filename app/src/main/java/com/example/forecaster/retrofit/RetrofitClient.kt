@@ -12,11 +12,11 @@ object RetrofitClient {
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(OkHttpClient
                     .Builder()
                     .addInterceptor(LoggingInterceptor())
                     .build())
-                .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
 
