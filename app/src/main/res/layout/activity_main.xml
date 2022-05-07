@@ -13,7 +13,9 @@
             android:theme="@style/Toolbar"
             android:minHeight="?attr/actionBarSize" android:id="@+id/toolbar" android:layout_weight="0">
     </androidx.appcompat.widget.Toolbar>
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/recycler_vew"/>
+
+    <fragment android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/main_fragment" android:name="com.example.forecaster.RetainFragment"
+              tools:layout="@layout/fragment_retain"/>
 </LinearLayout>

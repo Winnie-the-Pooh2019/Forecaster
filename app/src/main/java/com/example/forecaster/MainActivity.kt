@@ -15,7 +15,12 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
+var retainFragment: RetainFragment = RetainFragment()
+var TAG = "fragment"
+
 class MainActivity : AppCompatActivity() {
+    private lateinit var fragment: RetainFragment
+    
     private val service: RetrofitServices by lazy {
         Common.retrofitService
     }
@@ -36,13 +41,47 @@ class MainActivity : AppCompatActivity() {
             Timber.e(e)
         }
 
-        val weatherAdapter = WeatherAdapter()
-        findViewById<RecyclerView>(R.id.recycler_vew).apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = weatherAdapter
-        }
+//        fragment = supportFragmentManager.findFragmentByTag(RetainFragment.TAG) as RetainFragment? ?:
+//                // Otherwise, we create a new one and add it to the fragment manager.
+//                RetainFragment().apply {
+//                    // We need to pass in the number we want to add to `5`.
+//                    supportFragmentManager
+//                        .beginTransaction()
+//                        .add(this, RetainFragment.TAG)
+//                        .commit()
+//                }
+//
+//        val weatherAdapter = WeatherAdapter()
+//        findViewById<RecyclerView>(R.id.recycler_vew).apply {
+//            layoutManager = LinearLayoutManager(this@MainActivity)
+//            adapter = weatherAdapter
+//        }
+//
+//        getForecast(getString(R.string.city), weatherAdapter)
 
-        getForecast(getString(R.string.city), weatherAdapter)
+        if(savedInstanceState != null){
+
+            (supportFragmentManager.getFragment(
+                savedInstanceState,
+                TAG
+            ) as RetainFragment).also { retainFragment = it }
+            retainFragment.getSavedData()
+
+        }else{
+            retainFragment = RetainFragment().apply {
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(this, TAG)
+                    .commit()
+            }
+            retainFragment.getAllWeatherList("Shklov")
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle){
+        supportFragmentManager.putFragment(outState,TAG, retainFragment)
+        supportFragmentManager.saveFragmentInstanceState(retainFragment)
+        super.onSaveInstanceState(outState)
     }
 
     private fun getForecast(city: String, adapter: WeatherAdapter) {
