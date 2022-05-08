@@ -1,6 +1,6 @@
 package com.example.forecaster.model
 
-data class ListItem(
+data class ListItem (
     val dt: String = "",
     val main: Main,
     val weather: List<Weather>?,

@@ -14,8 +14,10 @@
             android:minHeight="?attr/actionBarSize" android:id="@+id/toolbar" android:layout_weight="0">
     </androidx.appcompat.widget.Toolbar>
 
-    <fragment android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/main_fragment" android:name="com.example.forecaster.RetainFragment"
-              tools:layout="@layout/fragment_retain"/>
+
+    <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_fragment" android:name="com.example.forecaster.RetainFragment"
+            tools:layout="@layout/fragment_retain"/>
 </LinearLayout>
