@@ -1,5 +1,8 @@
 package com.example.forecaster.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Main(
     val temp: Double = 0.0,
     val tempMin: Double = 0.0,

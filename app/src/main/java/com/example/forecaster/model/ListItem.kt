@@ -1,5 +1,8 @@
 package com.example.forecaster.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ListItem (
     val dt: String = "",
     val main: Main,

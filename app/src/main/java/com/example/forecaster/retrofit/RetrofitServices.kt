@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+@Deprecated("Use ktor instead of it")
 interface RetrofitServices {
     @GET("forecast?appid=b7eedb84f15757c5da8941a00663136d&units=metric&lang=ru")
     fun getWeather(@Query("q") name: String): Call<Wrapper>

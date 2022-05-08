@@ -48,3 +48,4 @@ class MainActivity : AppCompatActivity() {
         const val FRAGMENT_TAG = "fragment"
     }
 }
+

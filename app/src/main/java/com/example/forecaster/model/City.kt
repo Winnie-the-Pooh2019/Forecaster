@@ -1,5 +1,8 @@
 package com.example.forecaster.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class City(
     val country: String = "",
     val coord: Coord,

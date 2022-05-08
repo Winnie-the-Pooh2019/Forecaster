@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+@Deprecated("Use ktor instead of it")
 object RetrofitClient {
     private var retrofit: Retrofit? = null
 

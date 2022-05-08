@@ -1,5 +1,8 @@
 package com.example.forecaster.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Wrapper(
     val cod: String = "",
     val message: Int = 0,
