@@ -23,21 +23,25 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Timber.e(e)
         }
-
         Timber.e("ACTIVITY CREATED")
 
-        fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as RetainFragment? ?:
-                RetainFragment().apply {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .add(this, FRAGMENT_TAG)
-                        .commit()
-                }
+        fragment = (if (savedInstanceState == null)
+            RetainFragment().apply {
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(this, FRAGMENT_TAG)
+                    .commit()
+            }
+        else
+            supportFragmentManager.getFragment(savedInstanceState, FRAGMENT_TAG) as RetainFragment)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.e("ACTIVITY DESTROYED")
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.e("SAVING STATE")
+
+        supportFragmentManager.saveFragmentInstanceState(fragment)
+        supportFragmentManager.putFragment(outState, FRAGMENT_TAG, fragment)
     }
 
     companion object {

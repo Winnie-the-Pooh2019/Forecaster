@@ -20,14 +20,9 @@ import java.io.IOException
 
 class RetainFragment : Fragment() {
     private val weatherAdapter: WeatherAdapter = WeatherAdapter()
-    private lateinit var weatherListItem: MutableList<ListItem>
+    lateinit var weatherListItem: MutableList<ListItem>
     private val service: RetrofitServices by lazy {
         Common.retrofitService
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,11 +44,6 @@ class RetainFragment : Fragment() {
             weatherAdapter.submitList(weatherListItem)
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Timber.e("FRAGMENT DETACHED")
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         Timber.e("FRAGMENT DESTROYED")
@@ -65,7 +55,6 @@ class RetainFragment : Fragment() {
                 try {
                     val data = response.body() as Wrapper
                     weatherListItem = data.list.toMutableList()
-                    Timber.e("List = ${weatherListItem.isNotEmpty()}")
 
                     weatherAdapter.submitList(weatherListItem)
                 } catch (e: IOException) {
