@@ -15,10 +15,15 @@ import com.example.forecaster.model.Wrapper
 import com.example.forecaster.retrofit.RetrofitServices
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 import timber.log.Timber
+import java.io.IOException
 
 class RetainFragment : Fragment() {
     private var number: Int = 0
+    private val weatherAdapter: WeatherAdapter = WeatherAdapter()
+
+    private var weatherListItem: MutableList<ListItem> = mutableListOf()
 
     private val service: RetrofitServices by lazy {
         Common.retrofitService
@@ -44,11 +49,16 @@ class RetainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.e("FRAGMENT VIEW CREATED")
 
-//        view.findViewById<RecyclerView>(R.id.recycler_vew).apply {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = recyclerAdapter
-//        }
+        view.findViewById<RecyclerView>(R.id.recycler_vew).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = weatherAdapter
+        }
+        if (weatherListItem.isEmpty())
+            getForecast(view.context.getString(R.string.city), weatherAdapter)
+
+        Timber.e("List = $weatherListItem")
     }
 
     override fun onDetach() {
@@ -61,11 +71,47 @@ class RetainFragment : Fragment() {
         Timber.e("FRAGMENT DESTROYED")
     }
 
+    private fun getForecast(city: String, adapter: WeatherAdapter) {
+        service.getWeather(city).enqueue(object : Callback<Wrapper> {
+            override fun onResponse(call: Call<Wrapper>, response: Response<Wrapper>) {
+                try {
+                    val data = response.body() as Wrapper
+                    weatherListItem = data.list.toMutableList()
+
+                    adapter.submitList(weatherListItem)
+                } catch (e: IOException) {
+                    Timber.e(e)
+                }
+            }
+
+            override fun onFailure(call: Call<Wrapper>, t: Throwable) {
+                Timber.e("CANNOT ESTABLISH CONNECTION TO API")
+                adapter.submitList(mutableListOf<ListItem>())
+            }
+        })
+    }
+
+    class CallBack(private var weatherList: MutableList<ListItem>, private val adapter: WeatherAdapter) :
+        Callback<Wrapper> {
+        override fun onResponse(call: Call<Wrapper>, response: Response<Wrapper>) {
+            try {
+                val data = response.body() as Wrapper
+                weatherList = data.list.toMutableList()
+
+                adapter.submitList(weatherList)
+            } catch (e: IOException) {
+                Timber.e(e)
+            }
+        }
+
+        override fun onFailure(call: Call<Wrapper>, t: Throwable) {
+            Timber.e("CANNOT ESTABLISH CONNECTION TO API")
+            adapter.submitList(mutableListOf<ListItem>())
+        }
+
+    }
+
     companion object {
         const val NUMBER_TO_ADD = "numbers"
-
-        @JvmStatic
-        fun newInstance() =
-            RetainFragment()
     }
 }
