@@ -2,18 +2,11 @@ package com.example.forecaster
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.forecaster.common.Common
-import com.example.forecaster.retrofit.RetrofitServices
 import timber.log.Timber
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var fragment: RetainFragment
-    private val TASK_FRAGMENT_TAG = "fragment"
-
-    private val service: RetrofitServices by lazy {
-        Common.retrofitService
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         Timber.e("ACTIVITY CREATED")
 
-        fragment = supportFragmentManager.findFragmentByTag(TASK_FRAGMENT_TAG) as RetainFragment? ?:
-                // Otherwise, we create a new one and add it to the fragment manager.
+        fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as RetainFragment? ?:
                 RetainFragment().apply {
                     supportFragmentManager
                         .beginTransaction()
-                        .add(this, TASK_FRAGMENT_TAG)
+                        .add(this, FRAGMENT_TAG)
                         .commit()
                 }
     }
@@ -46,5 +38,9 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Timber.e("ACTIVITY DESTROYED")
+    }
+
+    companion object {
+        const val FRAGMENT_TAG = "fragment"
     }
 }
