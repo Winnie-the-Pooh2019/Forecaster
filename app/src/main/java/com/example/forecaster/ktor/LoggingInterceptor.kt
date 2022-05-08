@@ -1,4 +1,4 @@
-package com.example.forecaster
+package com.example.forecaster.ktor
 
 import okhttp3.Interceptor
 import okhttp3.Response

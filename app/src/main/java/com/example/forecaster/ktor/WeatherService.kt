@@ -1,6 +1,5 @@
 package com.example.forecaster.ktor
 
-import com.example.forecaster.LoggingInterceptor
 import com.example.forecaster.model.ListItem
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*

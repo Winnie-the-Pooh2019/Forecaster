@@ -1,12 +1,17 @@
 package com.example.forecaster
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.forecaster.adapter.WeatherAdapter
 import timber.log.Timber
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var fragment: RetainFragment
+
+    private val model: MainModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,27 +30,15 @@ class MainActivity : AppCompatActivity() {
         }
         Timber.e("ACTIVITY CREATED")
 
-        fragment = (if (savedInstanceState == null)
-            RetainFragment().apply {
-                supportFragmentManager
-                    .beginTransaction()
-                    .add(this, FRAGMENT_TAG)
-                    .commit()
-            }
-        else
-            supportFragmentManager.getFragment(savedInstanceState, FRAGMENT_TAG) as RetainFragment)
+        findViewById<RecyclerView>(R.id.recycler_vew).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = WeatherAdapter().apply { submitList(model.weatherList) }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Timber.e("SAVING STATE")
-
-        supportFragmentManager.saveFragmentInstanceState(fragment)
-        supportFragmentManager.putFragment(outState, FRAGMENT_TAG, fragment)
-    }
-
-    companion object {
-        const val FRAGMENT_TAG = "fragment"
     }
 }
 

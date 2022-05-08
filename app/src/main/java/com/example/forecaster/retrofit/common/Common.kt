@@ -1,6 +1,6 @@
 package com.example.forecaster.retrofit.common
 
-import com.example.forecaster.LoggingInterceptor
+import com.example.forecaster.ktor.LoggingInterceptor
 import com.example.forecaster.retrofit.RetrofitClient
 import com.example.forecaster.retrofit.RetrofitServices
 
