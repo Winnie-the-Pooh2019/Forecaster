@@ -3,6 +3,8 @@ package com.example.forecaster
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecaster.adapter.WeatherAdapter
@@ -11,7 +13,11 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    private val model: MainModel by viewModels()
+    /*
+     * viewModels assures persistence of model state.
+     * if the activity is redrawn, the viewModel looks for an already existing instance
+     */
+    private val model: MainModel by viewModelsFactory { MainModel(getString(R.string.city)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +38,25 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.recycler_vew).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = WeatherAdapter().apply { submitList(model.weatherList) }
+            adapter = WeatherAdapter().apply {
+                model.weatherList.observe(this@MainActivity) {
+                    this.submitList(it)
+                }
+            }
+        }
+    }
+
+    /*
+     * proprietary factory of viewModel gives ability putting params into constructor
+     */
+    @Suppress("UNCHECKED_CAST")
+    private inline fun <reified T : ViewModel> viewModelsFactory(crossinline viewModelInitialization: () -> T): Lazy<T> {
+        return viewModels {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return viewModelInitialization.invoke() as T
+                }
+            }
         }
     }
 
