@@ -10,7 +10,7 @@ import timber.log.Timber
 class MainModel(private val city: String) : ViewModel() {
     val weatherList: MutableLiveData<MutableList<ListItem>> by lazy {
         MutableLiveData<MutableList<ListItem>>().apply {
-            value = runBlocking {
+            postValue(runBlocking {
                 val data = MainRepository.repository.getWeather(city)
 
                 if (data != null)
@@ -19,7 +19,7 @@ class MainModel(private val city: String) : ViewModel() {
                     Timber.e(IllegalArgumentException())
                     return@runBlocking mutableListOf()
                 }
-            }
+            })
         }
     }
 }
