@@ -2,18 +2,22 @@ package com.example.forecaster
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.forecaster.ktor.WeatherService
 import com.example.forecaster.model.ListItem
-import kotlinx.coroutines.Dispatchers
+import com.example.forecaster.retrofit.MainRepository
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class MainModel(private val city: String) : ViewModel() {
     val weatherList: MutableLiveData<MutableList<ListItem>> by lazy {
         MutableLiveData<MutableList<ListItem>>().apply {
             value = runBlocking {
-                return@runBlocking withContext(Dispatchers.IO) {
-                    WeatherService.create().getWeatherList(city).toMutableList()
+                val data = MainRepository.repository.getWeather(city)
+
+                if (data != null)
+                    return@runBlocking data.list.toMutableList()
+                else {
+                    Timber.e(IllegalArgumentException())
+                    return@runBlocking mutableListOf()
                 }
             }
         }

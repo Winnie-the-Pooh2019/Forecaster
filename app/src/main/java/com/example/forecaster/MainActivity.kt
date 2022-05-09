@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
-        setTitle(R.string.city)
         Timber.plant(Timber.DebugTree())
 
         // todo check this feature via physical phone
