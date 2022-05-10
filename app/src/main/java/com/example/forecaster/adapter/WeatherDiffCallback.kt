@@ -1,7 +1,7 @@
 package com.example.forecaster.adapter
 
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
-import com.example.forecaster.model.Weather
+import com.example.forecaster.data.model.Weather
 
 class WeatherDiffCallback : ItemCallback<Weather>() {
     override fun areItemsTheSame(oldItem: Weather, newItem: Weather): Boolean {

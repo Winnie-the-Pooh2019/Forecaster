@@ -1,4 +1,4 @@
-package com.example.forecaster.retrofit
+package com.example.forecaster.data.retrofit
 
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
      * viewModels assures persistence of model state.
      * if the activity is redrawn, the viewModel looks for an already existing instance
      */
-    private val model: MainModel by viewModelsFactory { MainModel(getString(R.string.city)) }
+    private val model: MainModel by viewModelsFactory { MainModel(getString(R.string.city), this.application) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
