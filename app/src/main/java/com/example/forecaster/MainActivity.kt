@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.recycler_vew).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = WeatherAdapter().apply {
+            adapter = WeatherAdapter(this@MainActivity).apply {
                 model.weatherList.observe(this@MainActivity) {
                     this.submitList(it)
                 }
