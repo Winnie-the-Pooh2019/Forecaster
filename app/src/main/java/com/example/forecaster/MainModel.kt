@@ -1,13 +1,13 @@
 package com.example.forecaster
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.forecaster.data.MainRepository
 import com.example.forecaster.data.model.Weather
 import com.example.forecaster.data.retrofit.RetrofitService
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 
 class MainModel(private val city: String, application: Application) : AndroidViewModel(application) {
     val weatherList: MutableLiveData<MutableList<Weather>> by lazy {
@@ -15,11 +15,15 @@ class MainModel(private val city: String, application: Application) : AndroidVie
             postValue(runBlocking {
                 val data = MainRepository.getInstance(application, RetrofitService.getInstance()).getWeather(city)
 
-                if (data != null)
-                    return@runBlocking data.list.toMutableList()
-                else {
-                    Timber.e(IllegalArgumentException())
-                    return@runBlocking mutableListOf()
+                if (data.list.isNotEmpty())
+                    Toast.makeText(
+                        application.applicationContext,
+                        application.getString(R.string.connection_failed),
+                        Toast.LENGTH_SHORT
+                    )
+
+                return@runBlocking data.list.toMutableList().apply {
+                    sortWith { left, right -> left.date.compareTo(right.date) }
                 }
             })
         }

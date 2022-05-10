@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecaster.R
 import com.example.forecaster.data.model.Weather
-import timber.log.Timber
 
 class WeatherAdapter : ListAdapter<Weather, RecyclerView.ViewHolder>(WeatherDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -34,7 +33,6 @@ class WeatherAdapter : ListAdapter<Weather, RecyclerView.ViewHolder>(WeatherDiff
         private val feel: TextView = view.findViewById(R.id.text_feeling)
 
         fun bind(weather: Weather) {
-            Timber.e("LISTITEM = $weather")
             temperature.text = itemView.context.getString(R.string.details_temp, weather.main.temp.toString())
             dateTime.text = itemView.context.getString(R.string.details_date, weather.date)
             feel.text = itemView.context.getString(R.string.details_feel, weather.main.feelsLike.toString())

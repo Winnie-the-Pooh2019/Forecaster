@@ -6,4 +6,6 @@
     <string name="details_date">Date: %1$s</string>
     <string name="details_temp">Temp: %1$s\u2103</string>
     <string name="details_feel">Feels like %1$s\u2103</string>
+
+    <string name="connection_failed">No Internet connection</string>
 </resources>
