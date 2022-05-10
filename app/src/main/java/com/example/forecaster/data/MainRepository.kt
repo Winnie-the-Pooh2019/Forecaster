@@ -12,21 +12,30 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MainRepository private constructor(private val service: RetrofitService, private val dao: WeatherDao) {
-    suspend fun getWeather(name: String): WeatherWrapper = withContext(Dispatchers.IO) {
-        val response = service.getWeather(name)
-
+    suspend fun getWeatherFromNet(name: String): WeatherWrapper = withContext(Dispatchers.IO) {
         return@withContext try {
+            val response = service.getWeather(name)
+
             if (response.isSuccessful && response.body() != null) {
                 if (dao.count() > 100)
                     dao.nuke()
 
                 dao.insertAll(response.body()!!.list.map { it.toDto() })
                 response.body()!!
-            } else
-                WeatherWrapper(dao.getAll().map { it.toModel() })
+            } else {
+                throw Exception()
+            }
         } catch (e: Exception) {
             WeatherWrapper(listOf())
         }
+    }
+
+    suspend fun getWeatherFromDb(name: String) = withContext(Dispatchers.IO) {
+        return@withContext WeatherWrapper(try {
+            dao.getAll().map { it.toModel() }
+        } catch (e: Exception) {
+            listOf()
+        })
     }
 
     companion object {
@@ -41,7 +50,8 @@ class MainRepository private constructor(private val service: RetrofitService, p
                     Room.databaseBuilder(
                         context,
                         WeatherDatabase::class.java, context.getString(R.string.db_name)
-                    ).build().weatherDao())
+                    ).build().weatherDao()
+                )
 
                 repository
             }

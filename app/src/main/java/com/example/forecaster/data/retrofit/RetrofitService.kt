@@ -13,7 +13,7 @@ interface RetrofitService {
     suspend fun getWeather(@Query("q") name: String): Response<WeatherWrapper>
 
     companion object {
-        private const val BASE_URL = "http://api.openweathermap.org/data/2.5/"
+        private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
         fun getInstance(): RetrofitService = Retrofit.Builder()
             .baseUrl(BASE_URL)

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecaster.adapter.WeatherAdapter
+import com.example.forecaster.data.MainRepository
 import com.example.forecaster.data.retrofit.RetrofitService
 import timber.log.Timber
 import java.io.File
@@ -21,8 +22,8 @@ class MainActivity : AppCompatActivity() {
     private val model: MainModel by viewModelsFactory {
         MainModel(
             getString(R.string.city),
-            RetrofitService.getInstance(),
-            this.application
+            MainRepository.getInstance(this, RetrofitService.getInstance()),
+            this
         )
     }
 
