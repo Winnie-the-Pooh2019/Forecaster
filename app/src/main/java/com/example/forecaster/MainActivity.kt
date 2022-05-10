@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         Timber.plant(Timber.DebugTree())
 
-        // todo check this feature via physical phone
         try {
             val filename = "logcat_${System.currentTimeMillis()}.txt"
             val outputFile = File(this.externalCacheDir, filename)
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Timber.e(e)
         }
-        Timber.e("ACTIVITY CREATED")
 
         findViewById<RecyclerView>(R.id.recycler_vew).apply {
             layoutManager = LinearLayoutManager(context)
@@ -57,11 +55,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Timber.e("SAVING STATE")
     }
 }
 
