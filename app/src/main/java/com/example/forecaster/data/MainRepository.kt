@@ -19,9 +19,7 @@ class MainRepository private constructor(private val service: RetrofitService, p
             val response = service.getWeather(name)
 
             if (response.isSuccessful && response.body() != null) {
-                Timber.e("RESPONSE = ${response.body()}")
-                if (dao.getDaysCount() > 14)
-                    dao.nukeOld()
+                dao.getDaysCount()?.let { if (it > 14) dao.nukeOld() }
 
                 dao.insertAll(response.body()!!.list.map { it.toDto() })
                 response.body()!!
@@ -29,6 +27,7 @@ class MainRepository private constructor(private val service: RetrofitService, p
                 throw Exception()
             }
         } catch (e: Exception) {
+            Timber.e(e)
             WeatherWrapper(listOf(), City(name))
         }
     }
