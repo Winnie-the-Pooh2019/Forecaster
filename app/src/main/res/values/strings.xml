@@ -8,5 +8,5 @@
     <string name="details_feel">Feels like %1$s\u2103</string>
 
     <string name="connection_failed">No Internet connection</string>
-    <string name="db_name">weatherdb</string>
+    <string name="db_name">weather-db</string>
 </resources>

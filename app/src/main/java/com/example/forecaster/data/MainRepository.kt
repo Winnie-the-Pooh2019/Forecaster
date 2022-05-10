@@ -11,6 +11,7 @@ import com.example.forecaster.data.model.WeatherWrapper
 import com.example.forecaster.data.retrofit.RetrofitService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class MainRepository private constructor(private val service: RetrofitService, private val dao: WeatherDao) {
     suspend fun getWeatherFromNet(name: String): WeatherWrapper = withContext(Dispatchers.IO) {
@@ -18,8 +19,9 @@ class MainRepository private constructor(private val service: RetrofitService, p
             val response = service.getWeather(name)
 
             if (response.isSuccessful && response.body() != null) {
-                if (dao.count() > 100)
-                    dao.nuke()
+                Timber.e("RESPONSE = ${response.body()}")
+                if (dao.getDaysCount() > 14)
+                    dao.nukeOld()
 
                 dao.insertAll(response.body()!!.list.map { it.toDto() })
                 response.body()!!
@@ -33,7 +35,8 @@ class MainRepository private constructor(private val service: RetrofitService, p
 
     suspend fun getWeatherFromDb(name: String) = withContext(Dispatchers.IO) {
         return@withContext WeatherWrapper(try {
-            dao.getAll().map { it.toModel() }
+            val d = dao.getLastWeek().map { it.toModel() }
+            d
         } catch (e: Exception) {
             listOf()
         }, City(name))
