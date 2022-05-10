@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout/fragment_retain.xml" value="0.31068840579710144" />
         <entry key="app/src/main/res/layout/recycler_item.xml" value="0.358695652173913" />
         <entry key="app/src/main/res/layout/recycler_item_cold.xml" value="0.35733695652173914" />
+        <entry key="app/src/main/res/layout/recycler_item_hot.xml" value="0.35733695652173914" />
         <entry key="app/src/main/res/menu/toolbar.xml" value="0.3854166666666667" />
       </map>
     </option>

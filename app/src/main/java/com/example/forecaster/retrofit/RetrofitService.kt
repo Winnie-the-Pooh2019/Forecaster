@@ -1,7 +1,6 @@
 package com.example.forecaster.retrofit
 
-import com.example.forecaster.ktor.LoggingInterceptor
-import com.example.forecaster.model.Wrapper
+import com.example.forecaster.model.WeatherWrapper
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -11,7 +10,7 @@ import retrofit2.http.Query
 
 interface RetrofitService {
     @GET("forecast?appid=b7eedb84f15757c5da8941a00663136d&units=metric&lang=ru")
-    suspend fun getWeather(@Query("q") name: String): Response<Wrapper>
+    suspend fun getWeather(@Query("q") name: String): Response<WeatherWrapper>
 
     companion object {
         private const val BASE_URL = "http://api.openweathermap.org/data/2.5/"
