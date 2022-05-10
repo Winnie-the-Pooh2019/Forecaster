@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecaster.adapter.WeatherAdapter
+import com.example.forecaster.data.retrofit.RetrofitService
 import timber.log.Timber
 import java.io.File
 
@@ -17,7 +18,13 @@ class MainActivity : AppCompatActivity() {
      * viewModels assures persistence of model state.
      * if the activity is redrawn, the viewModel looks for an already existing instance
      */
-    private val model: MainModel by viewModelsFactory { MainModel(getString(R.string.city), this.application) }
+    private val model: MainModel by viewModelsFactory {
+        MainModel(
+            getString(R.string.city),
+            RetrofitService.getInstance(),
+            this.application
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

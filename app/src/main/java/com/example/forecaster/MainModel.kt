@@ -9,11 +9,11 @@ import com.example.forecaster.data.model.Weather
 import com.example.forecaster.data.retrofit.RetrofitService
 import kotlinx.coroutines.runBlocking
 
-class MainModel(private val city: String, application: Application) : AndroidViewModel(application) {
+class MainModel(private val city: String, private val service: RetrofitService, application: Application) : AndroidViewModel(application) {
     val weatherList: MutableLiveData<MutableList<Weather>> by lazy {
         MutableLiveData<MutableList<Weather>>().apply {
             postValue(runBlocking {
-                val data = MainRepository.getInstance(application, RetrofitService.getInstance()).getWeather(city)
+                val data = MainRepository.getInstance(application, service).getWeather(city)
 
                 if (data.list.isNotEmpty())
                     Toast.makeText(
