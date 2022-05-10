@@ -6,6 +6,7 @@ import com.example.forecaster.R
 import com.example.forecaster.data.Mapper.toDto
 import com.example.forecaster.data.Mapper.toModel
 import com.example.forecaster.data.dao.WeatherDao
+import com.example.forecaster.data.model.City
 import com.example.forecaster.data.model.WeatherWrapper
 import com.example.forecaster.data.retrofit.RetrofitService
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +27,7 @@ class MainRepository private constructor(private val service: RetrofitService, p
                 throw Exception()
             }
         } catch (e: Exception) {
-            WeatherWrapper(listOf())
+            WeatherWrapper(listOf(), City(name))
         }
     }
 
@@ -35,7 +36,7 @@ class MainRepository private constructor(private val service: RetrofitService, p
             dao.getAll().map { it.toModel() }
         } catch (e: Exception) {
             listOf()
-        })
+        }, City(name))
     }
 
     companion object {
