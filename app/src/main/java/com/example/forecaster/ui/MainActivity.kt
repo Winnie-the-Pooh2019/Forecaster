@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
      * viewModels assures persistence of model state.
      * if the activity is redrawn, the viewModel looks for an already existing instance
      */
-    private val model: MainModel by viewModelsFactory {
-        MainModel(
+    private val model: MainViewModel by viewModelsFactory {
+        MainViewModel(
             getString(R.string.city),
             MainRepository.getInstance(this, RetrofitService.getInstance()),
             this
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recycler_vew).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = WeatherAdapter(this@MainActivity).apply {
-                model.weatherList.observe(this@MainActivity) {
+                model.liveDate.observe(this@MainActivity) {
                     this.submitList(it)
                 }
             }

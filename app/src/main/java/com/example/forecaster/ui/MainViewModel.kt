@@ -2,21 +2,23 @@ package com.example.forecaster
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.forecaster.data.MainRepository
-import com.example.forecaster.data.model.Weather
+import com.example.forecaster.ui.model.Weather
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlin.coroutines.CoroutineContext
 
-class MainModel(private val city: String, private val repository: MainRepository, activity: AppCompatActivity) :
+class MainViewModel(private val city: String, private val repository: MainRepository, activity: AppCompatActivity) :
     AndroidViewModel(activity.application) {
 
-    val weatherList: MutableLiveData<MutableList<Weather>> by lazy {
-        val liveData = MutableLiveData<MutableList<Weather>>()
+    private var _liveData = MutableLiveData<List<Weather>>()
+    val liveDate: LiveData<List<Weather>>
+        get() = _liveData
+
+    init {
         CoroutineScope(Dispatchers.Default).launch {
             val data = repository.getWeatherFromNet(city)
 
@@ -33,9 +35,7 @@ class MainModel(private val city: String, private val repository: MainRepository
                     sortWith { left, right -> left.date.compareTo(right.date) }
                 }
 
-            liveData.postValue(data.list.toMutableList())
+            _liveData.postValue(data.list.toMutableList())
         }
-
-        liveData
     }
 }

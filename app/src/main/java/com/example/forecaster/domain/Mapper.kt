@@ -1,8 +1,8 @@
 package com.example.forecaster.data
 
 import com.example.forecaster.data.dto.WeatherDto
-import com.example.forecaster.data.model.Main
-import com.example.forecaster.data.model.Weather
+import com.example.forecaster.ui.model.Main
+import com.example.forecaster.ui.model.Weather
 
 object Mapper {
     fun Weather.toDto(): WeatherDto = WeatherDto(
