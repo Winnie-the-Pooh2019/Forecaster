@@ -1,4 +1,4 @@
-package com.example.forecaster
+package com.example.forecaster.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.forecaster.R
 import com.example.forecaster.adapter.WeatherAdapter
 import com.example.forecaster.data.MainRepository
 import com.example.forecaster.data.retrofit.RetrofitService
@@ -19,19 +20,22 @@ class MainActivity : AppCompatActivity() {
      * viewModels assures persistence of model state.
      * if the activity is redrawn, the viewModel looks for an already existing instance
      */
-    private val model: MainViewModel by viewModelsFactory {
-        MainViewModel(
-            getString(R.string.city),
-            MainRepository.getInstance(this, RetrofitService.getInstance()),
-            this
-        )
-    }
+    private lateinit var model: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
         Timber.plant(Timber.DebugTree())
+
+        model = ViewModelProvider(
+            this,
+            MainViewModelFactory(
+                getString(R.string.city),
+                MainRepository.getInstance(this, RetrofitService.getInstance()),
+                this
+            )
+        )[MainViewModel::class.java]
 
         try {
             val filename = "logcat_${System.currentTimeMillis()}.txt"
@@ -46,20 +50,6 @@ class MainActivity : AppCompatActivity() {
             adapter = WeatherAdapter(this@MainActivity).apply {
                 model.liveDate.observe(this@MainActivity) {
                     this.submitList(it)
-                }
-            }
-        }
-    }
-
-    /*
-     * proprietary factory of viewModel gives ability putting params into constructor
-     */
-    @Suppress("UNCHECKED_CAST")
-    private inline fun <reified T : ViewModel> viewModelsFactory(crossinline viewModelInitialization: () -> T): Lazy<T> {
-        return viewModels {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return viewModelInitialization.invoke() as T
                 }
             }
         }

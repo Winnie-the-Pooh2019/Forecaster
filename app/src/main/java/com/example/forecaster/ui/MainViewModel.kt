@@ -1,11 +1,11 @@
-package com.example.forecaster
+package com.example.forecaster.ui
 
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
+import com.example.forecaster.R
 import com.example.forecaster.data.MainRepository
-import com.example.forecaster.ui.model.Weather
+import com.example.forecaster.domain.model.Weather
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

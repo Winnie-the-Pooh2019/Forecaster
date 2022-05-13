@@ -1,4 +1,4 @@
-package com.example.forecaster.ui.model
+package com.example.forecaster.domain.model
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable

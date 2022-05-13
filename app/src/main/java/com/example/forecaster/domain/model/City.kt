@@ -1,4 +1,4 @@
-package com.example.forecaster.ui.model
+package com.example.forecaster.domain.model
 
 import kotlinx.serialization.Serializable
 

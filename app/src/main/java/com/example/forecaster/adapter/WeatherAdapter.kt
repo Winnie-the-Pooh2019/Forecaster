@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecaster.R
-import com.example.forecaster.data.model.Weather
+import com.example.forecaster.domain.model.Weather
 import timber.log.Timber
 
 class WeatherAdapter(private val activity: AppCompatActivity) : ListAdapter<Weather, RecyclerView.ViewHolder>(WeatherDiffCallback()) {

@@ -3,11 +3,11 @@ package com.example.forecaster.data
 import android.content.Context
 import androidx.room.Room
 import com.example.forecaster.R
-import com.example.forecaster.data.Mapper.toDto
-import com.example.forecaster.data.Mapper.toModel
+import com.example.forecaster.domain.Mapper.toDto
+import com.example.forecaster.domain.Mapper.toModel
 import com.example.forecaster.data.dao.WeatherDao
-import com.example.forecaster.data.model.City
-import com.example.forecaster.data.model.WeatherWrapper
+import com.example.forecaster.domain.model.City
+import com.example.forecaster.domain.model.WeatherWrapper
 import com.example.forecaster.data.retrofit.RetrofitService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

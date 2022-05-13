@@ -1,7 +1,8 @@
 package com.example.forecaster.data.retrofit
 
-import com.example.forecaster.data.model.WeatherWrapper
+import com.example.forecaster.domain.model.WeatherWrapper
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,7 +22,7 @@ interface RetrofitService {
             .client(
                 OkHttpClient
                 .Builder()
-                .addInterceptor(LoggingInterceptor())
+                .addInterceptor(HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BASIC })
                 .build())
             .build().create(RetrofitService::class.java)
     }

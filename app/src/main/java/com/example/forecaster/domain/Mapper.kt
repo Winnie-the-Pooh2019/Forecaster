@@ -1,17 +1,17 @@
-package com.example.forecaster.data
+package com.example.forecaster.domain
 
-import com.example.forecaster.data.dto.WeatherDto
-import com.example.forecaster.ui.model.Main
-import com.example.forecaster.ui.model.Weather
+import com.example.forecaster.data.entity.WeatherEntity
+import com.example.forecaster.domain.model.Main
+import com.example.forecaster.domain.model.Weather
 
 object Mapper {
-    fun Weather.toDto(): WeatherDto = WeatherDto(
+    fun Weather.toDto(): WeatherEntity = WeatherEntity(
         date = this.date,
         temperature = this.main.temp,
         feelings = this.main.feelsLike
     )
 
-    fun WeatherDto.toModel(): Weather = Weather(
+    fun WeatherEntity.toModel(): Weather = Weather(
         date = date,
         main = Main(
             temp = temperature,
